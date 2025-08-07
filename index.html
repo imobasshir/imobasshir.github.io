@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobasshir Imam - Frontend Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
+            <style>
         :root {
             --bg-dark: #1a202c;
             --bg-light: #2d3748;
@@ -13,6 +13,15 @@
             --text-dark: #a0aec0;
             --accent: #4fd1c5;
         }
+
+        .light-theme {
+            --bg-dark: #ffffff;
+            --bg-light: #f7fafc;
+            --text-light: #1a202c;
+            --text-dark: #4a5568;
+            --accent: #38b2ac;
+        }
+
         body {
             background-color: var(--bg-dark);
             color: var(--text-light);
@@ -32,12 +41,16 @@
     <header class="bg-dark shadow-md fixed w-full top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="text-2xl font-bold text-light">Mobasshir Imam</a>
-            <div class="hidden md:flex space-x-6">
+            <div class="hidden md:flex items-center space-x-6">
                 <a href="#about" class="hover-accent">About</a>
                 <a href="#experience" class="hover-accent">Experience</a>
                 <a href="#education" class="hover-accent">Education</a>
                 <a href="#projects" class="hover-accent">Projects</a>
                 <a href="#contact" class="hover-accent">Contact</a>
+                <button id="theme-toggle" class="ml-4 text-light focus:outline-none">
+                    <svg id="theme-toggle-dark-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    <svg id="theme-toggle-light-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </button>
             </div>
             <div class="md:hidden">
                 <button id="menu-btn" class="text-light focus:outline-none">
@@ -203,6 +216,47 @@
                     behavior: 'smooth'
                 });
             });
+        });
+
+        // Theme toggle
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Change the icons inside the button based on previous settings
+        if (localStorage.getItem('color-theme') === 'light' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            themeToggleLightIcon.classList.remove('hidden');
+            document.documentElement.classList.add('light-theme');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+            document.documentElement.classList.remove('light-theme');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            // toggle icons inside button
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            // if set via local storage previously
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.remove('light-theme');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.add('light-theme');
+                    localStorage.setItem('color-theme', 'light');
+                }
+
+            // if NOT set via local storage previously
+            } else {
+                if (document.documentElement.classList.contains('light-theme')) {
+                    document.documentElement.classList.remove('light-theme');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.add('light-theme');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            }
         });
     </script>
 

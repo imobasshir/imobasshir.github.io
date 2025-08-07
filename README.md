@@ -11,7 +11,7 @@ This is a personal portfolio website for Mobasshir Imam, a Frontend Developer wi
 ## Features
 
 *   Responsive design
-*   Dark theme
+*   Dark and Light themes with a toggle
 *   Sections for About, Experience, Education, Projects, and Contact
 *   Smooth scrolling
 
